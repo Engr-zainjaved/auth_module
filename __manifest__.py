@@ -5,9 +5,7 @@
     'category': 'Custom',
     'summary': 'Authenticate users via session ID in URL',
     'depends': ['web'],
-    'data': [
-        'security/ir.model.access.csv',
-    ],
+    'data': [],
     'installable': True,
     'application': True,
 }
