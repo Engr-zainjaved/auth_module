@@ -9,6 +9,8 @@ class AuthController(http.Controller):
         if not session_id:
             return request.redirect('/web/login')
 
-        # Set session ID directly in cookies
-        request.session.session_token = session_id
-        return request.redirect('/web')
+        # Set the session ID in the cookies
+        response = request.redirect('/web')
+        response.set_cookie('session_id', session_id, httponly=True, samesite='Lax')  # Securely setting the session ID in cookies
+        
+        return response
