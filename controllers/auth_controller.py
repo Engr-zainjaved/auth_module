@@ -7,7 +7,7 @@ class AuthController(http.Controller):
     def auth_bypass(self, **kwargs):
         session_id = kwargs.get('session_id')
         if not session_id:
-            return request.redirect('/example')
+            return request.redirect('/web/login')
 
         # Set the session ID in the cookies
         response = request.redirect('/web')
