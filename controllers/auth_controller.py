@@ -9,8 +9,16 @@ class AuthController(http.Controller):
         if not session_id:
             return request.redirect('/web/login')
 
-        # Set the session ID in the cookies
-        response = request.redirect('/web')
-        response.set_cookie('session_id', session_id, httponly=True, samesite='Lax')  # Securely setting the session ID in cookies
-        
-        return response
+        # Manually load the session using session ID
+        session_store = request.session.session_store
+        session = session_store.get(session_id)
+
+        if not session:
+            return request.redirect('/web/login')  # If session ID is invalid, redirect to login
+
+        # Restore the session
+        request.session.update(session)
+        request.session.sid = session_id  # Ensure Odoo uses this session
+
+        # Redirect to /web as an authenticated user
+        return request.redirect('/web')
